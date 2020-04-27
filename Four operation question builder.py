@@ -76,9 +76,18 @@ def view_answers():
 # 获取输入的数据
 def inputdata():
     lbox.delete(1, END)  # 清空上次生成的题目
+
     num = var_num.get()
     num = int(num)
-    operate = var_ope.get()
+    operate = []
+    if op1.get() == '+':
+        operate.append('+')
+    if op2.get() == '-':
+        operate.append('-')
+    if op3.get() == '*':
+        operate.append('*')
+    if op4.get() == '/':
+        operate.append('/')
     max = var_max.get()
     max = int(max)
     decimal = var_dec.get()
@@ -96,36 +105,47 @@ if __name__ == '__main__':
     # 创建窗口
     win = tkinter.Tk()
     win.title("四则运算生成器")
-    win.geometry("500x500")
+    win.geometry("600x600")
     # 创建选项
     tkinter.Label(win, text='题目数量：').place(x=10, y=150)
-    tkinter.Label(win, text='操作符：').place(x=10, y=180)
-    tkinter.Label(win, text='数字最大值：').place(x=10, y=210)
-    tkinter.Label(win, text='是否有小数（1/0）?').place(x=10, y=240)
-    tkinter.Label(win, text='请输入精度：').place(x=10, y=270)
-    tkinter.Label(win, text='是否有括号（1/0）?').place(x=10, y=300)
-
     var_num = tkinter.StringVar()
     entry_num = tkinter.Entry(win, textvariable=var_num)
     entry_num.place(x=80, y=150)
-    var_ope = tkinter.StringVar()
-    entry_ope = tkinter.Entry(win, textvariable=var_ope)
-    entry_ope.place(x=80, y=180)
+
+    tkinter.Label(win, text='操作符：').place(x=10, y=180)
+    op1 = StringVar()
+    op2 = StringVar()
+    op3 = StringVar()
+    op4 = StringVar()
+    check1 = tkinter.Checkbutton(win, text='+', font=("Times New Roman", "16"), variable=op1, onvalue='+', offvalue='').place(x=80, y=170)
+    check2 = tkinter.Checkbutton(win, text='-', font=("Times New Roman", "16"), variable=op2, onvalue='-', offvalue='').place(x=140, y=170)
+    check3 = tkinter.Checkbutton(win, text='*', font=("Times New Roman", "16"), variable=op3, onvalue='*', offvalue='').place(x=200, y=170)
+    check4 = tkinter.Checkbutton(win, text='/', font=("Times New Roman", "16"), variable=op4, onvalue='/', offvalue='').place(x=260, y=170)
+
+    tkinter.Label(win, text='数字最大值：').place(x=10, y=210)
     var_max = tkinter.StringVar()
     entry_max = tkinter.Entry(win, textvariable=var_max)
     entry_max.place(x=80, y=210)
+
+    tkinter.Label(win, text='是否有小数?').place(x=10, y=240)
     var_dec = tkinter.StringVar()
-    entry_dec = tkinter.Entry(win, textvariable=var_dec)
-    entry_dec.place(x=80, y=240)
+    var_dec.set('1')
+    radio1 = tkinter.Radiobutton(win, variable=var_dec, value='1', text='是').place(x=80, y=240)
+    radio1 = tkinter.Radiobutton(win, variable=var_dec, value='0', text='否').place(x=150, y=240)
+
+    tkinter.Label(win, text='请输入精度：').place(x=10, y=270)
     var_bit = tkinter.StringVar()
     entry_bit = tkinter.Entry(win, textvariable=var_bit)
     entry_bit.place(x=80, y=270)
+
+    tkinter.Label(win, text='是否有括号?').place(x=10, y=300)
     var_bra = tkinter.StringVar()
-    entry_bra = tkinter.Entry(win, textvariable=var_bra)
-    entry_bra.place(x=80, y=300)
+    var_dec.set('1')
+    radio2 = tkinter.Radiobutton(win, variable=var_bra, value='1', text='是').place(x=80, y=300)
+    radio2 = tkinter.Radiobutton(win, variable=var_bra, value='0', text='否').place(x=150, y=300)
 
     button_enter = tkinter.Button(win, text='点击生成题目', bg='orange', command=inputdata)
-    button_enter.place(x=50, y=330)
+    button_enter.place(x=100, y=330)
     # 创建答案区
     var1 = tkinter.StringVar()
     lab1 = tkinter.Label(win, bg='yellow', width=20, height=2, textvariable=var1)
