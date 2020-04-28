@@ -16,8 +16,8 @@ def create(operate, max, decimal, dec_bit, bracket):
     Formula = []  # 生成的算式
     numBracket = 0  # 括号数量
     numCount = random.randint(2, 6)  # 运算数字数量
-    if bracket:
-        if numCount < 3:  # 括号数量
+    if bracket: 
+        if numCount < 3:  
             numBracket = 0
         elif numCount < 5:
             numBracket = 1
@@ -35,8 +35,11 @@ def create(operate, max, decimal, dec_bit, bracket):
             braRight2 = random.randint(2, numCount)
             while braRight2 <= braLeft2:
                 braRight2 = random.randint(2, numCount)
+            while braRight1 == braRight2 and braLeft1 == braLeft2:
+                braLeft1 = random.randint(1, numCount - 1)
+                braRight1 = random.randint(2, numCount)
     for i in range(numCount):
-        if bracket:  # 随机添加左括号
+        if bracket:  # 添加左括号
             if numBracket == 1 and i + 1 == braLeft1:
                 Formula.append('(')
             if numBracket == 2:
@@ -107,6 +110,7 @@ if __name__ == '__main__':
     win = tkinter.Tk()
     win.title("四则运算生成器")
     win.geometry("600x600")
+
     win.configure(background=bgcolor)
     # 创建选项
     tkinter.Label(win, text='题目数量：', bg=bgcolor).place(x=10, y=150)
@@ -150,7 +154,7 @@ if __name__ == '__main__':
     button_enter.place(x=100, y=330)
     # 创建答案区
     var1 = tkinter.StringVar()
-    lab1 = tkinter.Label(win, bg=blackcolor, width=20, height=2, textvariable=var1)
+    lab1 = tkinter.Label(win, bg=blackcolor, width=20, height=2, textvariable=var1,font=("Times New Roman", "16"))
     lab1.pack()
     # 创建查看答案按钮
     button1 = tkinter.Button(win, text='点此查看算式答案', width=15, height=2, command=view_answers, bg='orange')
@@ -161,7 +165,7 @@ if __name__ == '__main__':
     scrolly = Scrollbar(win)
     scrolly.pack(side=RIGHT, fill=Y)
     # 创建Listbox（即生成算式列表）
-    lbox = tkinter.Listbox(win, width=30, height=200, listvariable=var2, yscrollcommand=scrolly.set, bg=blackcolor)
+    lbox = tkinter.Listbox(win, width=40, height=200, listvariable=var2, yscrollcommand=scrolly.set, bg=blackcolor)
     lbox.pack(anchor=tkinter.NE)
     scrolly.config(command=lbox.yview)
     # 显示主窗口
